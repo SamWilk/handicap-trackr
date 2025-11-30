@@ -1,35 +1,75 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+/**
+ * Main App Component
+ * Golf Handicap Tracker - Track your golf rounds and calculate your handicap index
+ */
+
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { CssBaseline, Box, Alert, Stack } from "@mui/material";
+import { Layout, HandicapDisplay, RoundForm, RoundList } from "./components";
+import { useRounds } from "./hooks/useRounds";
+import { useHandicap } from "./hooks/useHandicap";
+
+// Create Material-UI theme
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#2e7d32", // Golf green
+    },
+    secondary: {
+      main: "#1976d2",
+    },
+  },
+  typography: {
+    fontFamily: '"Roboto", "Helvetica", "Arial", sans-serif',
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
+  const { rounds, loading, addRound, deleteRound } = useRounds();
+  const handicapData = useHandicap(rounds);
+
+  if (loading) {
+    return (
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Layout>
+          <Box sx={{ p: 3 }}>Loading...</Box>
+        </Layout>
+      </ThemeProvider>
+    );
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Layout>
+        <Stack spacing={3}>
+          {/* Handicap Display */}
+          <HandicapDisplay handicapData={handicapData} />
+
+          {/* Info Alert */}
+          {rounds.length < 3 && (
+            <Alert severity="info">
+              You need at least 3 rounds to calculate your handicap index. The
+              more rounds you enter (up to 20), the more accurate your handicap
+              will be.
+            </Alert>
+          )}
+
+          {/* Add Round Form and Round History */}
+          <Stack direction={{ xs: "column", md: "row" }} spacing={3}>
+            <Box sx={{ flex: 1 }}>
+              <RoundForm onAddRound={addRound} />
+            </Box>
+
+            <Box sx={{ flex: 1 }}>
+              <RoundList rounds={rounds} onDeleteRound={deleteRound} />
+            </Box>
+          </Stack>
+        </Stack>
+      </Layout>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
