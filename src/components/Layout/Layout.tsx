@@ -18,7 +18,7 @@ export const Layout = ({ children }: LayoutProps) => {
         <Toolbar>
           <GolfIcon sx={{ mr: 2 }} />
           <Typography variant="h6" component="h1" sx={{ fontWeight: 600 }}>
-            Golf Handicap Tracker
+            Golf Handicap Trackr
           </Typography>
         </Toolbar>
       </AppBar>
