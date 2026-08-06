@@ -1,21 +1,23 @@
-/**
- * Global styles for Golf Handicap Tracker
- * Material-UI handles most styling, this provides minimal global resets
- */
+@import url("https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Manrope:wght@400;500;600;700;800&display=swap");
 
 * {
-  margin: 0;
-  padding: 0;
   box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family: "Manrope", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #13253c;
+  background:
+    radial-gradient(circle at top left, rgba(29, 53, 87, 0.08), transparent 32%),
+    radial-gradient(circle at top right, rgba(175, 148, 111, 0.14), transparent 28%),
+    linear-gradient(180deg, #f4efe7 0%, #f8f4ec 40%, #f6f1e8 100%);
 }
 
 #root {
